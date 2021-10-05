@@ -1,4 +1,5 @@
 "use strict"
+import team from "./team.js"
 let list = [];
 let pokemon = [];
 
@@ -6,11 +7,13 @@ function getData() {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             list = data.results;
             data.results.forEach(pokemon => {
                 fetch(pokemon.url)
                     .then(response => response.json())
                     .then(data => {
+                        pokemon.push(data);
                     })
             });
         })
@@ -24,7 +27,7 @@ window.onload = function () {
     function buildList() {
         let innerhtml = ""
 
-        pokemon.forEach( pokemon =>{
+        pokemon.forEach(pokemon => {
             console.log(pokemon.name);
             innerhtml += `
                 <div class="pokemon">
